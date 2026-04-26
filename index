@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El Balcón & Ylumi — Acaxochitlán</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* =============================
+       CSS VARIABLES & RESET
+    ============================= */
+    :root {
+      --olive:    #3F5A3C;
+      --olive-lt: #546F51;
+      --beige:    #E8E1D6;
+      --beige-dk: #D6CCBF;
+      --gold:     #C9A86A;
+      --gold-lt:  #DEC08A;
+      --brown:    #2E2A26;
+      --brown-lt: #5A4F44;
+      --white:    #FDFAF6;
+      --shadow:   0 4px 24px rgba(46,42,38,.10);
+      --radius:   16px;
+      --radius-sm:8px;
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+
+    a { text-decoration: none; color: inherit; }
+
+    img { display: block; max-width: 100%; }
+
+    /* =============================
+       SCROLLBAR
+    ============================= */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--beige); }
+    ::-webkit-scrollbar-thumb { background: var(--olive); border-radius: 3px; }
+
+    /* =============================
+       UTILITY
+    ============================= */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--olive);
+      position: relative;
+      display: inline-block;
+      margin-bottom: .5rem;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 2px;
+      background: var(--gold);
+      margin-top: 8px;
+    }
+    .section-subtitle {
+      font-size: .95rem;
+      color: var(--brown-lt);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      letter-spacing: .04em;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: .04em;
+    }
+    .btn-primary {
+      background: var(--olive);
+      color: var(--beige);
+    }
+    .btn-primary:hover {
+      background: var(--olive-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(63,90,60,.3);
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--brown);
+    }
+    .btn-gold:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201,168,106,.3);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--olive);
+      border: 2px solid var(--olive);
+    }
+    .btn-outline:hover {
+      background: var(--olive);
+      color: var(--beige);
+    }
+
+    /* =============================
+       FADE-IN ANIMATION
+    ============================= */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================
+       NAVBAR
+    ============================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 16px 0;
+      background: rgba(232,225,214,.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,106,.2);
+      transition: var(--transition);
+    }
+    .navbar.scrolled {
+      padding: 10px 0;
+      box-shadow: var(--shadow);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--olive);
+      font-style: italic;
+      line-height: 1.1;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--brown);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--olive); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .cart-btn {
+      position: relative;
+      background: var(--olive);
+      color: var(--beige);
+      border: none;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .cart-btn:hover { background: var(--olive-lt); transform: scale(1.05); }
+    .cart-badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      background: var(--gold);
+      color: var(--brown);
+      border-radius: 50%;
+      width: 18px; height: 18px;
+      font-size: .65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      display: none;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--brown);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: var(--beige);
+      padding: 20px;
+      z-index: 999;
+      border-bottom: 1px solid var(--beige-dk);
+      box-shadow: var(--shadow);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 0;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--brown);
+      border-bottom: 1px solid var(--beige-dk);
+      letter-spacing: .04em;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* =============================
+       HERO
+    ============================= */
+    .hero {
+      min-height: 100svh;
+      background: linear-gradient(160deg, #2E2A26 0%, #3F5A3C 55%, #546F51 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0 60px;
+    }
+    /* Decorative circles */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,106,.15);
+      top: -100px; right: -100px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,106,.1);
+      bottom: 60px; left: 60px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+    }
+    .hero-eyebrow {
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      color: var(--beige);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero p {
+      font-size: 1rem;
+      color: rgba(232,225,214,.8);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    /* floating coffee cup decoration */
+    .hero-deco {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14rem;
+      opacity: .06;
+      user-select: none;
+      z-index: 1;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(-50%) rotate(-5deg); }
+      50%      { transform: translateY(calc(-50% - 20px)) rotate(5deg); }
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 30px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(232,225,214,.5);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* =============================
+       MENU SECTION
+    ============================= */
+    .menu-section {
+      padding: 100px 0 60px;
+      background: var(--white);
+    }
+    .menu-header { margin-bottom: 40px; }
+    /* Category tabs */
+    .cat-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .cat-tab {
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 1.5px solid var(--beige-dk);
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--brown-lt);
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: .05em;
+    }
+    .cat-tab.active, .cat-tab:hover {
+      background: var(--olive);
+      border-color: var(--olive);
+      color: var(--beige);
+    }
+    /* Category section */
+    .cat-section { display: none; }
+    .cat-section.active { display: block; }
+    .cat-title {
+      font-size: 1.4rem;
+      color: var(--olive);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cat-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+    /* Product grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    .product-card {
+      background: var(--white);
+      border: 1px solid var(--beige-dk);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(46,42,38,.12);
+    }
+    .product-emoji {
+      background: linear-gradient(135deg, var(--beige) 0%, var(--beige-dk) 100%);
+      text-align: center;
+      font-size: 3rem;
+      padding: 28px;
+      line-height: 1;
+    }
+    .product-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--brown);
+      margin-bottom: 6px;
+    }
+    .product-desc {
+      font-size: .78rem;
+      color: var(--brown-lt);
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product-price {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--olive);
+      font-family: 'Playfair Display', serif;
+    }
+    .add-btn {
+      background: var(--olive);
+      color: var(--beige);
+      border: none;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      line-height: 1;
+    }
+    .add-btn:hover {
+      background: var(--gold);
+      color: var(--brown);
+      transform: scale(1.1) rotate(90deg);
+    }
+
+    /* =============================
+       CART SIDEBAR
+    ============================= */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(46,42,38,.5);
+      z-index: 1100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-sidebar {
+      position: fixed;
+      top: 0; right: -420px;
+      width: 420px; max-width: 100vw;
+      height: 100svh;
+      background: var(--white);
+      z-index: 1101;
+      display: flex;
+      flex-direction: column;
+      transition: right .4s cubic-bezier(.4,0,.2,1);
+      box-shadow: -8px 0 40px rgba(46,42,38,.15);
+    }
+    .cart-sidebar.open { right: 0; }
+    .cart-head {
+      padding: 24px;
+      border-bottom: 1px solid var(--beige-dk);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--beige);
+    }
+    .cart-head h3 {
+      font-size: 1.3rem;
+      color: var(--olive);
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--brown);
+      line-height: 1;
+      transition: var(--transition);
+    }
+    .cart-close:hover { transform: rotate(90deg); color: var(--olive); }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+    .cart-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--brown-lt);
+    }
+    .cart-empty span { font-size: 4rem; display: block; margin-bottom: 16px; }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--beige-dk);
+    }
+    .cart-item-emoji { font-size: 2rem; width: 44px; text-align: center; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-size: .9rem; font-weight: 600; color: var(--brown); }
+    .cart-item-price { font-size: .8rem; color: var(--olive); font-weight: 500; }
+    .cart-item-controls { display: flex; align-items: center; gap: 8px; }
+    .qty-btn {
+      background: var(--beige);
+      border: 1px solid var(--beige-dk);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      font-size: .9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      color: var(--brown);
+    }
+    .qty-btn:hover { background: var(--olive); color: var(--beige); border-color: var(--olive); }
+    .qty-num { font-weight: 700; font-size: .9rem; min-width: 20px; text-align: center; }
+    .cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--beige-dk);
+      background: var(--beige);
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .cart-total-label { font-size: .85rem; font-weight: 500; color: var(--brown-lt); }
+    .cart-total-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--olive);
+      font-weight: 700;
+    }
+
+    /* =============================
+       ORDER MODAL
+    ============================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(46,42,38,.6);
+      z-index: 1200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px;
+      max-width: 480px;
+      width: 100%;
+      transform: scale(.9);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 24px 80px rgba(46,42,38,.25);
+    }
+    .modal-overlay.open .modal { transform: scale(1); }
+    .modal h3 {
+      font-size: 1.6rem;
+      color: var(--olive);
+      margin-bottom: 8px;
+    }
+    .modal p.modal-sub {
+      font-size: .85rem;
+      color: var(--brown-lt);
+      margin-bottom: 28px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: 6px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--beige-dk);
+      border-radius: var(--radius-sm);
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+      color: var(--brown);
+      background: var(--beige);
+      transition: border-color var(--transition);
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus { border-color: var(--olive); }
+    .modal-order-summary {
+      background: var(--beige);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 24px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .modal-order-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: .82rem;
+      padding: 5px 0;
+      border-bottom: 1px dashed var(--beige-dk);
+      color: var(--brown);
+    }
+    .modal-order-item:last-child { border-bottom: none; }
+    .modal-actions { display: flex; gap: 12px; }
+    .modal-actions .btn { flex: 1; justify-content: center; }
+
+    /* SUCCESS MODAL */
+    .success-modal {
+      text-align: center;
+    }
+    .success-modal .success-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .success-modal h3 { color: var(--olive); margin-bottom: 10px; }
+    .success-modal p { font-size: .9rem; color: var(--brown-lt); margin-bottom: 24px; }
+
+    /* =============================
+       EXPERIENCE SECTION
+    ============================= */
+    .experience-section {
+      padding: 100px 0;
+      background: var(--brown);
+      position: relative;
+      overflow: hidden;
+    }
+    .experience-section::before {
+      content: '☕';
+      position: absolute;
+      font-size: 300px;
+      opacity: .04;
+      right: -40px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .exp-text .section-title { color: var(--gold); }
+    .exp-text .section-title::after { background: var(--olive); }
+    .exp-text p {
+      color: rgba(232,225,214,.8);
+      font-size: .95rem;
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+    .exp-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+    .stat {
+      text-align: center;
+      padding: 24px 12px;
+      background: rgba(232,225,214,.05);
+      border-radius: var(--radius);
+      border: 1px solid rgba(201,168,106,.15);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .stat-label { font-size: .75rem; color: rgba(232,225,214,.5); margin-top: 4px; }
+    .exp-image-mock {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, #3F5A3C 0%, #2E2A26 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .exp-image-mock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A86A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .exp-image-inner {
+      font-size: 8rem;
+      z-index: 1;
+      opacity: .4;
+      animation: float 5s ease-in-out infinite;
+    }
+    .exp-badge {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: var(--gold);
+      color: var(--brown);
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* =============================
+       GALLERY
+    ============================= */
+    .gallery-section {
+      padding: 100px 0;
+      background: var(--beige);
+    }
+    .gallery-section .section-header { margin-bottom: 40px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 14px;
+    }
+    .gallery-item {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--beige-dk), var(--beige));
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      transition: var(--transition);
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; aspect-ratio: 2/1; }
+    .gallery-item:nth-child(5) { grid-column: span 2; aspect-ratio: 2/1; }
+    .gallery-item:hover { transform: scale(.98); }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(63,90,60,.7), rgba(46,42,38,.5));
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity var(--transition);
+      color: var(--beige);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+    /* =============================
+       FOOTER
+    ============================= */
+    .footer {
+      background: var(--brown);
+      color: rgba(232,225,214,.7);
+      padding: 60px 0 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    .footer-brand h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .footer-brand p {
+      font-size: .85rem;
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 280px;
+    }
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .social-link {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,106,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      color: var(--gold);
+    }
+    .social-link:hover {
+      background: var(--gold);
+      color: var(--brown);
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .footer-col h4 {
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li {
+      font-size: .85rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .footer-col ul li span { flex-shrink: 0; }
+    .footer-bottom {
+      border-top: 1px solid rgba(201,168,106,.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .75rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom a { color: var(--gold); }
+
+    /* =============================
+       TOAST NOTIFICATION
+    ============================= */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--olive);
+      color: var(--beige);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: .85rem;
+      font-weight: 600;
+      z-index: 2000;
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(63,90,60,.4);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* =============================
+       RESPONSIVE
+    ============================= */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .exp-grid { grid-template-columns: 1fr; gap: 40px; }
+      .exp-image-mock { aspect-ratio: 16/7; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: span 2; }
+    }
+    @media (max-width: 600px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-item:nth-child(1),
+      .gallery-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/7; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-brand { grid-column: span 1; }
+      .hero-deco { display: none; }
+      .exp-stats { grid-template-columns: 1fr 1fr; }
+      .modal { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- =============================
+     NAVBAR
+============================= -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <div class="nav-logo">
+      El Balcón<br>
+      <span style="font-size:.85rem; font-style:normal; letter-spacing:.08em;">& YLUMI</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#experience">Nosotros</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#footer">Contacto</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="cart-btn" id="cartToggle" aria-label="Carrito">
+        🛒
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#menu" onclick="closeMobileMenu()">☕ Menú</a>
+  <a href="#experience" onclick="closeMobileMenu()">🌿 Nosotros</a>
+  <a href="#gallery" onclick="closeMobileMenu()">📸 Galería</a>
+  <a href="#footer" onclick="closeMobileMenu()">📍 Contacto</a>
+</div>
+
+<!-- =============================
+     HERO
+============================= -->
+<section class="hero" id="home">
+  <div class="hero-deco">☕</div>
+  <div class="container">
+    <div class="hero-content fade-in">
+      <p class="hero-eyebrow">☕ Acaxochitlán, Hidalgo · Pueblo Mágico</p>
+      <h1>Un rincón para<br><em>disfrutar</em></h1>
+      <p>Café artesanal, cócteles únicos y snacks deliciosos con vista al corazón de Acaxochitlán. Tu lugar favorito en el balcón.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-gold">Ver menú completo</a>
+        <a href="#experience" class="btn btn-outline" style="color:var(--beige);border-color:rgba(232,225,214,.4)">Conócenos</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>↓</span>
+    <span>Desliza</span>
+  </div>
+</section>
+
+<!-- =============================
+     MENU SECTION
+============================= -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="menu-header fade-in">
+      <h2 class="section-title">Nuestro Menú</h2>
+      <p class="section-subtitle">Todo hecho con amor, sabor y el ambiente único de El Balcón</p>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="cat-tabs fade-in" id="catTabs">
+      <button class="cat-tab active" data-cat="cocteles">🍹 Cócteles</button>
+      <button class="cat-tab" data-cat="cerveza">🍺 Cerveza</button>
+      <button class="cat-tab" data-cat="licores">🥃 Licores</button>
+      <button class="cat-tab" data-cat="calientes">☕ Calientes</button>
+      <button class="cat-tab" data-cat="frias">🧋 Frías</button>
+      <button class="cat-tab" data-cat="waffles">🧇 Waffles</button>
+      <button class="cat-tab" data-cat="snacks">🍟 Snacks</button>
+    </div>
+
+    <!-- CÓCTELES -->
+    <div class="cat-section active fade-in" id="cat-cocteles">
+      <h3 class="cat-title">🍹 Cócteles & Tragos</h3>
+      <div class="products-grid" id="grid-cocteles"></div>
+    </div>
+
+    <!-- CERVEZA -->
+    <div class="cat-section fade-in" id="cat-cerveza">
+      <h3 class="cat-title">🍺 Cerveza</h3>
+      <div class="products-grid" id="grid-cerveza"></div>
+    </div>
+
+    <!-- LICORES -->
+    <div class="cat-section fade-in" id="cat-licores">
+      <h3 class="cat-title">🥃 Licores & Raspados</h3>
+      <div class="products-grid" id="grid-licores"></div>
+    </div>
+
+    <!-- CALIENTES -->
+    <div class="cat-section fade-in" id="cat-calientes">
+      <h3 class="cat-title">☕ Bebidas Calientes</h3>
+      <div class="products-grid" id="grid-calientes"></div>
+    </div>
+
+    <!-- FRÍAS -->
+    <div class="cat-section fade-in" id="cat-frias">
+      <h3 class="cat-title">🧋 Bebidas Frías</h3>
+      <div class="products-grid" id="grid-frias"></div>
+    </div>
+
+    <!-- WAFFLES -->
+    <div class="cat-section fade-in" id="cat-waffles">
+      <h3 class="cat-title">🧇 Waffles</h3>
+      <div class="products-grid" id="grid-waffles"></div>
+    </div>
+
+    <!-- SNACKS -->
+    <div class="cat-section fade-in" id="cat-snacks">
+      <h3 class="cat-title">🍟 Snacks</h3>
+      <div class="products-grid" id="grid-snacks"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================
+     EXPERIENCE SECTION
+============================= -->
+<section class="experience-section" id="experience">
+  <div class="container">
+    <div class="exp-grid">
+      <div class="exp-text fade-in">
+        <h2 class="section-title">Más que un café,<br>una experiencia</h2>
+        <p style="margin-top:20px">En El Balcón & Ylumi encontrarás el rincón perfecto para relajarte, compartir y crear momentos únicos. Estamos ubicados en el corazón de Acaxochitlán, Pueblo Mágico de Hidalgo.</p>
+        <p>Desde cócteles artesanales hasta waffles esponjosos, cada producto es preparado con cuidado para que tu visita sea siempre especial. Ven y encuentra tu lugar favorito.</p>
+        <div class="exp-stats">
+          <div class="stat">
+            <div class="stat-num">50+</div>
+            <div class="stat-label">Productos</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Hecho con amor</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">🌿</div>
+            <div class="stat-label">Ambiente único</div>
+          </div>
+        </div>
+      </div>
+      <div class="exp-image-mock fade-in">
+        <div class="exp-image-inner">🏡</div>
+        <div class="exp-badge">📍 Acaxochitlán, Hgo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================
+     GALLERY SECTION
+============================= -->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Momentos en El Balcón</h2>
+      <p class="section-subtitle">Comparte tu visita con #ElBalconYlumi</p>
+    </div>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item" style="background:linear-gradient(135deg,#3F5A3C,#546F51)">
+        ☕
+        <div class="gallery-item-overlay">Café de especialidad</div>
+      </div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#C9A86A,#DEC08A)">
+        🍹
+        <div class="gallery-item-overlay">Cócteles únicos</div>
+      </div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#2E2A26,#5A4F44)">
+        🧇
+        <div class="gallery-item-overlay">Waffles deliciosos</div>
+      </div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#E8E1D6,#D6CCBF)">
+        🌿
+        <div class="gallery-item-overlay">Ambiente acogedor</div>
+      </div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#3F5A3C,#2E2A26)">
+        🍺
+        <div class="gallery-item-overlay">Cervezas artesanales</div>
+      </div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#C9A86A,#3F5A3C)">
+        🍓
+        <div class="gallery-item-overlay">Fresas con crema</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================
+     FOOTER
+============================= -->
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>El Balcón & Ylumi</h3>
+        <p>Cafetería & Accesorios. Tu rincón favorito en Acaxochitlán, Pueblo Mágico de Hidalgo. Piezas únicas para momentos inolvidables.</p>
+        <div class="social-links">
+          <a class="social-link" href="https://www.instagram.com/elbalcon_ylumi" target="_blank" title="Instagram">📸</a>
+          <a class="social-link" href="#" title="Facebook">👍</a>
+          <a class="social-link" href="#" title="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Menú rápido</h4>
+        <ul>
+          <li><span>🍹</span>Cócteles</li>
+          <li><span>☕</span>Café</li>
+          <li><span>🧇</span>Waffles</li>
+          <li><span>🍟</span>Snacks</li>
+          <li><span>🍺</span>Cerveza</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Visítanos</h4>
+        <ul>
+          <li><span>📍</span>Acaxochitlán, Hidalgo, México</li>
+          <li><span>🕐</span>Horarios en Instagram</li>
+          <li><span>📱</span>@elbalcon_ylumi</li>
+          <li><span>🌐</span>Pueblo Mágico</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 El Balcón & Ylumi · Todos los derechos reservados</span>
+      <a href="https://www.instagram.com/elbalcon_ylumi" target="_blank">@elbalcon_ylumi</a>
+    </div>
+  </div>
+</footer>
+
+<!-- =============================
+     CART SIDEBAR
+============================= -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>🛒 Tu Pedido</h3>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <span>🛒</span>
+      <p>Tu carrito está vacío.<br>¡Agrega algo delicioso!</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total estimado</span>
+      <span class="cart-total-amount">$<span id="cartTotal">0</span></span>
+    </div>
+    <button class="btn btn-primary" id="orderBtn" style="width:100%;justify-content:center" disabled>
+      Realizar pedido
+    </button>
+  </div>
+</div>
+
+<!-- =============================
+     ORDER MODAL
+============================= -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal" id="orderModalBox">
+    <!-- Will be filled by JS -->
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   DATA — MENU PRODUCTS
+============================================================ */
+const menuData = {
+  cocteles: [
+    { name: 'Palomas', price: 50, desc: 'Refrescante y ligero, perfecto para cualquier momento.', emoji: '🌸' },
+    { name: 'Mojito Clásico', price: 55, desc: 'Menta fresca, lima y ron. El clásico que nunca falla.', emoji: '🍃' },
+    { name: 'Mojito Fresa', price: 55, desc: 'Fresas frescas con toque de menta y ron blanco.', emoji: '🍓' },
+    { name: 'Mojito Frutos Rojos', price: 55, desc: 'Mix de frutos rojos con la frescura del mojito clásico.', emoji: '🫐' },
+    { name: 'Azulitos', price: 50, desc: 'Coctel azul vibrante con sabor tropical y frutal.', emoji: '💙' },
+    { name: 'Pantera Rosa', price: 50, desc: 'Rosa, dulce y elegante. Un cóctel que enamora.', emoji: '🌺' },
+    { name: 'Margarita', price: 50, desc: 'Tequila, limón y sal. Un clásico mexicano inigualable.', emoji: '🍋' },
+    { name: 'Tequila Sunrise', price: 50, desc: 'Naranja, granadina y tequila — colores de amanecer.', emoji: '🌅' },
+    { name: 'Verano Sunrise', price: 55, desc: 'Versión veraniega del sunrise, más frutal y refrescante.', emoji: '🌞' },
+    { name: 'Piña Colada', price: 50, desc: 'Coco, piña y ron. El sabor del paraíso tropical.', emoji: '🍍' },
+    { name: 'Cuba', price: 50, desc: 'Ron, refresco de cola y limón. Simple y delicioso.', emoji: '🥃' },
+  ],
+  cerveza: [
+    { name: 'Cerveza Nacional', price: 30, desc: 'Victoria, Corona, Sol, Tecate Original, Indio, Superior, XX.', emoji: '🍺' },
+    { name: 'Cerveza Especial', price: 35, desc: 'Negra Modelo, Modelo Especial, Sol Clamato, Pacífico, Bohemia.', emoji: '🍻' },
+    { name: 'Chelada Nacional', price: 45, desc: 'Cerveza nacional preparada con limón, sal y hielo.', emoji: '🍋' },
+    { name: 'Chelada Especial', price: 50, desc: 'Cerveza especial preparada con limón, sal y chamoy.', emoji: '🌶' },
+    { name: 'Michelada Nacional', price: 50, desc: 'La clásica michelada con clamato, limón y especias.', emoji: '🍅' },
+    { name: 'Michelada Especial', price: 60, desc: 'Michelada premium con cerveza especial y mezcla secreta.', emoji: '🔥' },
+  ],
+  licores: [
+    { name: 'Licor de Acachul', price: 30, desc: 'Sabor local único — fruto endémico de la región.', emoji: '🫒' },
+    { name: 'Licor de Membrillo', price: 30, desc: 'Dulce y aromático, sabor tradicional hidalguense.', emoji: '🍑' },
+    { name: 'Licor de Canela', price: 30, desc: 'Calidez en cada sorbo. Perfecto después de comer.', emoji: '✨' },
+    { name: 'Licor de 14 Tortillas', price: 30, desc: 'El licor más especial de la casa, sabor único.', emoji: '🌽' },
+    { name: 'Licor de Maracuyá', price: 30, desc: 'Tropical y exótico. Maracuyá en su mejor forma.', emoji: '💛' },
+    { name: 'Licor de Manzana', price: 30, desc: 'Dulce y fresco, perfecto para cualquier temporada.', emoji: '🍏' },
+    { name: 'Licor de Café', price: 30, desc: 'Para los amantes del café: licor suave y aromático.', emoji: '☕' },
+    { name: 'Raspado de Licor', price: 45, desc: 'Tu licor favorito convertido en raspado artesanal.', emoji: '🧊' },
+  ],
+  calientes: [
+    { name: 'Café Latte', price: 50, desc: 'Espresso suave con leche vaporizada y espuma cremosa.', emoji: '☕' },
+    { name: 'Cappuccino', price: 45, desc: 'Vainilla, Fresa o Moka. Espresso con espuma de leche.', emoji: '🫧' },
+    { name: 'Caramel', price: 50, desc: 'Bebida caliente con caramelo dorado y leche vaporizada.', emoji: '🍯' },
+    { name: 'Café Moka', price: 50, desc: 'Espresso con chocolate. El duo perfecto de café y cacao.', emoji: '🍫' },
+    { name: 'Café Americano', price: 40, desc: 'Espresso diluido con agua caliente. Puro y directo.', emoji: '⚡' },
+  ],
+  frias: [
+    { name: 'Frappé Clásico', price: 50, desc: 'Vainilla, Fresa, Caramel, Capuchino, Caramelo, Oreo, Moka, Taro.', emoji: '🧊' },
+    { name: 'Frappé Gansito', price: 70, desc: 'El frappé más indulgente: sabor Gansito o Magnum.', emoji: '🍰' },
+    { name: 'Caramel Macchiato Helado', price: 60, desc: 'Espresso con leche fría y caramelo. Elegante y delicioso.', emoji: '🍮' },
+    { name: 'Soda Italiana', price: 45, desc: 'Frutos Rojos, Mora Azul o Fresa. Burbujas con sabor.', emoji: '🫧' },
+    { name: 'Limonada', price: 35, desc: 'Natural, fresca y preparada al momento con limón real.', emoji: '🍋' },
+    { name: 'Naranjada', price: 35, desc: 'Naranja natural exprimida, refrescante y vitamínica.', emoji: '🍊' },
+    { name: 'Sangría Preparada', price: 45, desc: 'Sangría casera con frutas de temporada.', emoji: '🍷' },
+    { name: 'Refresco', price: 25, desc: 'Manzanita, Sprite, Fanta, Delaware, Coca, Jugo del Valle, Sidral.', emoji: '🥤' },
+  ],
+  waffles: [
+    { name: 'Waffle de Avena', price: 50, desc: 'Con Hershey\'s, Nutella, Maple o Lechera. Fresa o Durazno.', emoji: '🧇' },
+    { name: 'Waffle Clásico', price: 50, desc: 'Chispas de chocolate o colores, Nuez. ¡Irresistible!', emoji: '🍫' },
+    { name: 'Waffle con Helado', price: 50, desc: 'Waffle crocante con helado Napolitano o Vainilla encima.', emoji: '🍨' },
+  ],
+  snacks: [
+    { name: 'Papas a la Francesa', price: 50, desc: 'Crujientes y doradas. El snack clásico perfecto.', emoji: '🍟' },
+    { name: 'Boneless', price: 50, desc: 'Trozos de pollo bañados en tu salsa favorita.', emoji: '🍗' },
+    { name: 'Fresas con Crema', price: 65, desc: 'Fresas frescas con crema batida y topping especial.', emoji: '🍓' },
+    { name: 'Cuernito Salado', price: 30, desc: 'Con jamón, queso amarillo, mayonesa y queso de hebra.', emoji: '🥐' },
+    { name: 'Cuernito de Fresa', price: 25, desc: 'Con crema batida, fresa, chocolate y azúcar glass.', emoji: '🍓' },
+    { name: 'Maruchan', price: 25, desc: 'La sopa instantánea clásica, siempre lista para ti.', emoji: '🍜' },
+    { name: 'Sincronizadas', price: 45, desc: 'Quesadilla doble con jamón y queso fundido.', emoji: '🫓' },
+    { name: 'Sandwich', price: 30, desc: 'Relleno con ingredientes frescos y bien preparado.', emoji: '🥪' },
+    { name: 'Hot Dog', price: 30, desc: 'Salchicha en pan suave con mostaza, catsup y crema.', emoji: '🌭' },
+    { name: 'Boings Congelados', price: 30, desc: 'Tu jugo favorito Boing, congelado y refrescante.', emoji: '🧃' },
+    { name: 'Vaquitas', price: 30, desc: 'El dulce de leche clásico. Cremoso y delicioso.', emoji: '🍬' },
+  ],
+};
+
+/* ============================================================
+   CART STATE
+============================================================ */
+let cart = [];
+
+/* ============================================================
+   RENDER PRODUCT CARDS
+============================================================ */
+function renderMenus() {
+  Object.entries(menuData).forEach(([cat, items]) => {
+    const grid = document.getElementById('grid-' + cat);
+    if (!grid) return;
+    grid.innerHTML = items.map((item, i) => `
+      <div class="product-card" style="animation-delay:${i * .05}s">
+        <div class="product-emoji">${item.emoji}</div>
+        <div class="product-body">
+          <div class="product-name">${item.name}</div>
+          <div class="product-desc">${item.desc}</div>
+          <div class="product-footer">
+            <span class="product-price">$${item.price}</span>
+            <button class="add-btn" onclick="addToCart('${cat}',${i})" title="Agregar al carrito">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  });
+}
+
+/* ============================================================
+   CART LOGIC
+============================================================ */
+function addToCart(cat, idx) {
+  const item = menuData[cat][idx];
+  const existing = cart.find(c => c.name === item.name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+  updateCartUI();
+  showToast(`${item.emoji} ${item.name} agregado`);
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(c => c.name !== name);
+  updateCartUI();
+}
+
+function changeQty(name, delta) {
+  const item = cart.find(c => c.name === name);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(name);
+  else updateCartUI();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const count = cart.reduce((s, c) => s + c.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  const cartTotal = document.getElementById('cartTotal');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartEmpty = document.getElementById('cartEmpty');
+  const orderBtn = document.getElementById('orderBtn');
+
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'flex' : 'none';
+  cartTotal.textContent = total;
+  orderBtn.disabled = cart.length === 0;
+
+  if (cart.length === 0) {
+    cartEmpty.style.display = 'block';
+    // Remove all cart item elements except the empty notice
+    Array.from(cartItemsEl.children).forEach(child => {
+      if (child !== cartEmpty) child.remove();
+    });
+    return;
+  }
+
+  cartEmpty.style.display = 'none';
+  // Rebuild cart items
+  const cartItemEls = Array.from(cartItemsEl.querySelectorAll('.cart-item'));
+  cartItemEls.forEach(el => el.remove());
+
+  cart.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div class="cart-item-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">$${item.price} c/u · Total: $${item.price * item.qty}</div>
+      </div>
+      <div class="cart-item-controls">
+        <button class="qty-btn" onclick="changeQty('${item.name}',-1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty('${item.name}',1)">+</button>
+      </div>
+    `;
+    cartItemsEl.appendChild(div);
+  });
+}
+
+/* ============================================================
+   CART SIDEBAR TOGGLE
+============================================================ */
+function openCart() {
+  document.getElementById('cartSidebar').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartSidebar').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('cartToggle').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+/* ============================================================
+   ORDER MODAL
+============================================================ */
+function openOrderModal() {
+  closeCart();
+  const modal = document.getElementById('orderModalBox');
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const summaryHTML = cart.map(c => `
+    <div class="modal-order-item">
+      <span>${c.emoji} ${c.name} × ${c.qty}</span>
+      <span>$${c.price * c.qty}</span>
+    </div>
+  `).join('');
+
+  modal.innerHTML = `
+    <h3>🛒 Tu Pedido</h3>
+    <p class="modal-sub">Revisa tu pedido y completa tus datos</p>
+    <div class="modal-order-summary">${summaryHTML}</div>
+    <div class="form-group">
+      <label>Nombre completo</label>
+      <input type="text" id="orderName" placeholder="¿Cómo te llamamos?" />
+    </div>
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input type="tel" id="orderPhone" placeholder="55 1234 5678" />
+    </div>
+    <div class="form-group">
+      <label>Método de entrega</label>
+      <select id="orderDelivery">
+        <option value="recoger">🏃 Recoger en El Balcón</option>
+        <option value="domicilio">🛵 Domicilio</option>
+      </select>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-weight:600;color:var(--olive);">
+      <span>Total a pagar:</span>
+      <span style="font-family:'Playfair Display',serif;font-size:1.2rem">$${total}</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeOrderModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="submitOrder()">✓ Confirmar pedido</button>
+    </div>
+  `;
+  document.getElementById('orderModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitOrder() {
+  const name = document.getElementById('orderName').value.trim();
+  const phone = document.getElementById('orderPhone').value.trim();
+  const delivery = document.getElementById('orderDelivery').value;
+
+  if (!name) { showToast('⚠️ Por favor ingresa tu nombre'); return; }
+  if (!phone) { showToast('⚠️ Por favor ingresa tu teléfono'); return; }
+
+  const deliveryText = delivery === 'recoger' ? 'Recoger en tienda' : 'A domicilio';
+
+  const modal = document.getElementById('orderModalBox');
+  modal.innerHTML = `
+    <div class="success-modal">
+      <span class="success-icon">🎉</span>
+      <h3>¡Pedido enviado!</h3>
+      <p>Gracias, <strong>${name}</strong>. Tu pedido está en camino.<br>
+      Nos comunicaremos al <strong>${phone}</strong>.<br>
+      Entrega: <strong>${deliveryText}</strong></p>
+      <button class="btn btn-primary" style="margin:0 auto" onclick="finalizeOrder()">¡Listo!</button>
+    </div>
+  `;
+  cart = [];
+  updateCartUI();
+}
+
+function finalizeOrder() {
+  closeOrderModal();
+}
+
+document.getElementById('orderBtn').addEventListener('click', openOrderModal);
+document.getElementById('orderModal').addEventListener('click', function(e) {
+  if (e.target === this) closeOrderModal();
+});
+
+/* ============================================================
+   CATEGORY TABS
+============================================================ */
+document.getElementById('catTabs').addEventListener('click', function(e) {
+  const tab = e.target.closest('.cat-tab');
+  if (!tab) return;
+  const cat = tab.dataset.cat;
+
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+
+  document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('cat-' + cat).classList.add('active');
+});
+
+/* ============================================================
+   NAVBAR SCROLL EFFECT
+============================================================ */
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+/* ============================================================
+   HAMBURGER MENU
+============================================================ */
+document.getElementById('hamburger').addEventListener('click', function() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+/* ============================================================
+   FADE-IN OBSERVER
+============================================================ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ============================================================
+   TOAST NOTIFICATION
+============================================================ */
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+renderMenus();
+
+// Re-observe fade-in elements after render
+setTimeout(() => {
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+}, 100);
+</script>
+</body>
+</html>
